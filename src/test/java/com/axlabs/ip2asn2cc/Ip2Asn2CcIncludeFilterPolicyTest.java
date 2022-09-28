@@ -1,12 +1,13 @@
 package com.axlabs.ip2asn2cc;
 
-import com.axlabs.ip2asn2cc.exception.RIRNotDownloadedException;
-import com.axlabs.ip2asn2cc.model.FilterPolicy;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.axlabs.ip2asn2cc.exception.RIRNotDownloadedException;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -17,9 +18,20 @@ public class Ip2Asn2CcIncludeFilterPolicyTest {
 
     @BeforeClass
     public static void initialize() throws RIRNotDownloadedException {
-        List<String> listCountryCode = new ArrayList<String>();
+        List<String> listCountryCode = new ArrayList<>();
         listCountryCode.add("US");
         ip2Asn2Cc = new Ip2Asn2Cc(listCountryCode);
+    }
+    
+    @Test
+    public void getCountryNameTest() throws RIRNotDownloadedException {
+        ip2Asn2Cc = new Ip2Asn2Cc(Collections.singletonList("US"));
+        System.out.println("Localhost Country: " + ip2Asn2Cc.getRIRCountryCode("127.0.0.1")); //Is hard coded to US
+        
+        String cc = ip2Asn2Cc.getRIRCountryCode("8.8.8.8");
+        boolean status = cc.equals("US");
+        System.out.println("Google DNS Country: " + cc); //Should be US
+        System.out.println("Test Status: " + (status ? "PASSED" : "FAILED"));
     }
 
     @Test

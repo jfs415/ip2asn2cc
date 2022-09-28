@@ -6,15 +6,21 @@ public class IPv6Subnet extends IPSubnet {
     // * address: address (e.g., 2001:618::)
     // * networkMask: the ipv6 network mask on the CIDR format (e.g., 32 -- which means /32)
 
-    private Integer networkMask;
+    private final Integer networkMask;
+    private final String countryCode;
 
-    public IPv6Subnet(String address, Integer networkMask) {
+    public IPv6Subnet(String address, Integer networkMask, String countryCode) {
         super(address);
         this.networkMask = networkMask;
+        this.countryCode = countryCode;
     }
 
     public Integer getNetworkMask() {
         return networkMask;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
     }
 
 }

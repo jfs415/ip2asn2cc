@@ -2,20 +2,23 @@ package com.axlabs.ip2asn2cc.model;
 
 public class Ip2Asn2CcEntry {
 
-    private String registry;
+    private final String registry;
 
-    private String inetFamily;
+    private final String inetFamily;
 
-    private String address;
+    private final String address;
 
-    private int addresses;
+    private final String countryCode;
 
-    private String date;
+    private final int addresses;
 
-    public Ip2Asn2CcEntry(String registry, String inetFamily, String address, int addresses, String date) {
+    private final String date;
+
+    public Ip2Asn2CcEntry(String registry, String inetFamily, String address, String countryCode, int addresses, String date) {
         this.registry = registry;
         this.inetFamily = inetFamily;
         this.address = address;
+        this.countryCode = countryCode;
         this.addresses = addresses;
         this.date = date;
     }
@@ -38,6 +41,10 @@ public class Ip2Asn2CcEntry {
 
     public String getDate() {
         return date;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
     }
 
 }

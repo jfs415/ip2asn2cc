@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,11 +23,11 @@ public class RIRParser implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(RIRParser.class);
 
-    private IPv4Checker ipv4Checker;
-    private IPv6Checker ipv6Checker;
-    private ASNChecker asnChecker;
-    private File fileToParse;
-    private List<String> listCountryCodeToLookFor;
+    private final IPv4Checker ipv4Checker;
+    private final IPv6Checker ipv6Checker;
+    private final ASNChecker asnChecker;
+    private final File fileToParse;
+    private final List<String> listCountryCodeToLookFor;
 
     public RIRParser(IPv4Checker ipv4Checker,
                      IPv6Checker ipv6Checker,
@@ -45,7 +46,7 @@ public class RIRParser implements Runnable {
         LOG.debug("Started parsing RIR file: " + this.fileToParse.getAbsolutePath());
 
         List<Pattern> listPatternsToWatch = this.listCountryCodeToLookFor.stream()
-                .map((countryCode) -> getPatternByCountry(countryCode))
+                .map(this::getPatternByCountry)
                 .collect(Collectors.toList());
 
         try (Stream<String> stream = Files.lines(Paths.get(this.fileToParse.toURI()))) {
@@ -57,23 +58,24 @@ public class RIRParser implements Runnable {
                         .collect(Collectors.toList());
             }).flatMap((matchers) -> {
                 return matchers.stream()
-                        .filter((matcher) -> matcher.find())
+                        .filter(Matcher::find)
                         .filter(matcher -> matcher.groupCount() == 7)
                         .map((matcher) -> {
                             return new Ip2Asn2CcEntry(
                                     matcher.group(1), // registry
                                     matcher.group(2), // inet family (ipv4 or ipv6)
                                     matcher.group(3), // address or asn number
+                                    matcher.group(0).split("\\|")[1], // country code
                                     Integer.parseInt(matcher.group(4)), // addresses
                                     matcher.group(5)); // date
                         });
             }).forEach((ip2Asn2CcEntry) -> {
                 if (ip2Asn2CcEntry.getInetFamily().equals("ipv4")) {
-                    IPv4Subnet ipv4Subnet = new IPv4Subnet(ip2Asn2CcEntry.getAddress(), ip2Asn2CcEntry.getAddresses());
+                    IPv4Subnet ipv4Subnet = new IPv4Subnet(ip2Asn2CcEntry.getAddress(), ip2Asn2CcEntry.getAddresses(), ip2Asn2CcEntry.getCountryCode());
                     this.ipv4Checker.addSubnet(ipv4Subnet);
                 }
                 if (ip2Asn2CcEntry.getInetFamily().equals("ipv6")) {
-                    IPv6Subnet ipv6Subnet = new IPv6Subnet(ip2Asn2CcEntry.getAddress(), ip2Asn2CcEntry.getAddresses());
+                    IPv6Subnet ipv6Subnet = new IPv6Subnet(ip2Asn2CcEntry.getAddress(), ip2Asn2CcEntry.getAddresses(), ip2Asn2CcEntry.getCountryCode());
                     this.ipv6Checker.addSubnet(ipv6Subnet);
                 }
                 if (ip2Asn2CcEntry.getInetFamily().equals("asn")) {
