@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class ASNChecker implements ASNCheckerInterface {
 
-    private Set<String> asns = Collections.synchronizedSet(new HashSet<String>());
+    private final Set<String> asns = Collections.synchronizedSet(new HashSet<>());
 
     public ASNChecker() {
     }

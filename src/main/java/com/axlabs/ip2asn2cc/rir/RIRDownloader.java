@@ -14,8 +14,8 @@ public class RIRDownloader implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(RIRDownloader.class);
 
-    private List<File> listDownloadedFiles;
-    private String urlToDownload;
+    private final List<File> listDownloadedFiles;
+    private final String urlToDownload;
 
     public RIRDownloader(List<File> listDownloadedFiles, String urlToDownload) {
         this.listDownloadedFiles = listDownloadedFiles;

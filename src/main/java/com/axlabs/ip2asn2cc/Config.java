@@ -4,11 +4,11 @@ import com.axlabs.ip2asn2cc.model.FilterPolicy;
 
 public class Config {
 
-    private FilterPolicy filterPolicy;
+    private final FilterPolicy filterPolicy;
 
-    private Boolean includeIpv4LocalAddresses;
+    private final Boolean includeIpv4LocalAddresses;
 
-    private Boolean includeIpv6LocalAddresses;
+    private final Boolean includeIpv6LocalAddresses;
 
     public Config(FilterPolicy filterPolicy, Boolean includeIpv4LocalAddresses, Boolean includeIpv6LocalAddresses) {
         this.filterPolicy = filterPolicy;
