@@ -35,6 +35,11 @@ compile 'com.axlabs:ip2asn2cc:0.0.1'
 
 > **IMPORTANT**: make sure that your project is using the Maven Central repository. Check more info on how to include it on [here](https://docs.gradle.org/current/userguide/dependency_management_for_java_projects.html) (Gradle) and [here](https://maven.apache.org/guides/introduction/introduction-to-repositories.html) (Maven). 
 
+# Contributions:
+* Reformatting and refactoring to fit personal formatting style.
+* Add the countryCode attribute to IPv4Subnet and IPv6Subnet classes.
+* Update build.gradle archivesBaseName property and add support for publish to maven local.
+
 # License
 
 ```
@@ -45,7 +50,7 @@ compile 'com.axlabs:ip2asn2cc:0.0.1'
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
    
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
        
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
