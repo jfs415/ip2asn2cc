@@ -79,7 +79,7 @@ public class Ip2Asn2Cc {
                 .map((address) -> this.ipv4Checker.checkIfIsInRange(address) ? ipv4Checker.getCountryCodeInRange(ipAddress) : ipv6Checker.getCountryCodeInRange(address))
                 .orElse("Unknown");
     }
-    
+
     public synchronized boolean checkIP(String ipAddress) {
         LOG.debug("Check for: " + ipAddress);
         return ofNullable(ipAddress)
@@ -117,7 +117,7 @@ public class Ip2Asn2Cc {
             IPv4Subnet localhostIPv4 = new IPv4Subnet("127.0.0.0", 16777214, "US");
             ipv4Checker.addSubnet(localhostIPv4);
         }
-        
+
         if (this.config.getIncludeIpv6LocalAddresses()) {
             // ::1/128 defined in https://tools.ietf.org/html/rfc4291
             IPv6Subnet localhostIPv6 = new IPv6Subnet("0:0:0:0:0:0:0:1", 128, "US");

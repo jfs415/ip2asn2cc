@@ -7,7 +7,7 @@ public class IPv4Subnet extends IPSubnet {
     // * amountOfAddresses: amount of addresses (e.g., 524288 -- which means /13)
 
     private final Integer amountOfAddresses;
-    
+
     private final String countryCode;
 
     public IPv4Subnet(String address, Integer amountOfAddresses, String countryCode) {

@@ -32,7 +32,7 @@ public class IPv4Checker implements IPv4CheckerInterface {
         }
         return false;
     }
-    
+
     @Override
     public String getCountryCodeInRange(String ipAddress) {
         // if it's valid, check if the ipAddress is ipv4
