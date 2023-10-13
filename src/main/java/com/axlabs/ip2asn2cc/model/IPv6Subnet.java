@@ -1,5 +1,7 @@
 package com.axlabs.ip2asn2cc.model;
 
+import java.util.Objects;
+
 public class IPv6Subnet extends IPSubnet {
 
     // for IPv6::
@@ -21,6 +23,21 @@ public class IPv6Subnet extends IPSubnet {
 
     public String getCountryCode() {
         return countryCode;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof IPv6Subnet iPv6Subnet && (super.equals(iPv6Subnet))) {
+            return this.networkMask.equals(iPv6Subnet.getNetworkMask()) && this.countryCode.equals(iPv6Subnet.getCountryCode());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * super.hashCode() + ((networkMask != null ? Objects.hash(networkMask) : 0)
+                + (countryCode != null ? Objects.hash(countryCode) : 0));
     }
 
 }

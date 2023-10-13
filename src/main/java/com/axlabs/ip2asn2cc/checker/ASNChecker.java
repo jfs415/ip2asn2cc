@@ -8,9 +8,6 @@ public class ASNChecker implements ASNCheckerInterface {
 
     private final Set<String> asns = Collections.synchronizedSet(new HashSet<>());
 
-    public ASNChecker() {
-    }
-
     @Override
     public boolean checkIfMatches(String asn) {
         return this.asns.contains(asn);

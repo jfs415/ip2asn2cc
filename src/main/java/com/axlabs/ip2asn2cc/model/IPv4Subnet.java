@@ -1,5 +1,7 @@
 package com.axlabs.ip2asn2cc.model;
 
+import java.util.Objects;
+
 public class IPv4Subnet extends IPSubnet {
 
     // for IPv4:
@@ -32,6 +34,21 @@ public class IPv4Subnet extends IPSubnet {
 
     public String getCountryCode() {
         return countryCode;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof IPv4Subnet iPv4Subnet && (super.equals(iPv4Subnet))) {
+            return this.amountOfAddresses.equals(iPv4Subnet.getAmountOfAddresses()) && this.countryCode.equals(iPv4Subnet.getCountryCode());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * super.hashCode() + ((amountOfAddresses != null ? Objects.hash(amountOfAddresses) : 0)
+                + (countryCode != null ? Objects.hash(countryCode) : 0));
     }
 
 }

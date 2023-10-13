@@ -34,10 +34,13 @@ public class RIRDownloader implements Runnable {
 
     private File download(String urlString) throws Exception {
         URL url = new URL(urlString);
-        ReadableByteChannel rbc = Channels.newChannel(url.openStream());
-        File tempFile = File.createTempFile("ip2asn2cc-", ".db");
-        FileOutputStream fos = new FileOutputStream(tempFile);
-        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        File tempFile;
+        try (ReadableByteChannel rbc = Channels.newChannel(url.openStream())) {
+            tempFile = File.createTempFile("ip2asn2cc-", ".db");
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
+        }
         LOG.debug("Downloaded RIR file: {}", urlString);
         return tempFile;
     }
